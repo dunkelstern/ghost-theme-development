@@ -1,0 +1,35 @@
+{
+  "name": "inuit-starting-point",
+  "version": "1.0.0",
+  "authors": [
+    "Johannes Schriewer <j.schriewer@anfe.ma>"
+  ],
+  "description": "Base installation of gulp and inuit",
+  "main": "gulpfile.js",
+  "keywords": [
+    "inuitcss",
+    "scss",
+    "inuit",
+    "scaffolding"
+  ],
+  "license": "BSD",
+  "homepage": "http://blog.dunkelstern.de/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "inuit-starter-kit": "~0.2.8",
+    "inuit-widths": "~0.3.2",
+    "inuit-images": "~0.3.2",
+    "inuit-layout": "~0.3.2",
+    "inuit-list-bare": "~0.3.0",
+    "inuit-tabs": "~0.2.1",
+    "inuit-buttons": "~0.4.1",
+    "inuit-lists": "~0.1.0"
+  }
+}
