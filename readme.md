@@ -6,6 +6,7 @@
 - Installation of dependencies
 - Building
 - Serving the files with a local webserver
+- Sublime Text
 
 <!-- /MarkdownTOC -->
 
@@ -42,3 +43,11 @@ gulp livereload
 ```
 
 This will run a demo ghost instance on http://localhost:2368 (user `template`, email: `example@example.com`, password: `template`) with the dev-theme preselected.
+
+## Sublime Text
+
+If you're using Sublime Text, please open the `template-dev` project, it hides all things that are not neccessary for developing a template.
+
+Furthermore it defines 2 build targets:
+- `build` for just compiling the template
+- `preview` for running a ghost instance and enabling live reload for your browser

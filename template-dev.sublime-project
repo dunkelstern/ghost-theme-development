@@ -1,0 +1,61 @@
+{
+	"folders":
+	[
+		{
+			"name": "Ghost Template",
+			"path": "/Users/dark/Documents/Git/ghost-template-dev",
+			"folder_exclude_patterns": ["node_modules", "content", "fonts" ],
+			"file_exclude_patterns": [".gitignore", "dev-theme.zip", "gulpfile.js", "package.json", "bower.json", "*.sublime-project", "*.sublime-workspace", "ghost-config.js", "*.cache"]
+		}
+	],
+	"settings":
+	{
+		"tab_size": 4
+	},
+
+	"build_systems":
+	[
+		{
+			"name" : "Gulp Handlebars",
+			"selector": "text.html.handlebars",
+			"cmd": [ "gulp" ],
+			"working_dir": "${project_path}",
+
+			"variants":
+			[
+				{
+					"name": "Preview in ghost",
+					"cmd": [ "gulp",  "livereload" ]
+				}
+			]
+		},
+		{
+			"name" : "Gulp SCSS",
+			"selector": "source.scss",
+			"cmd": [ "gulp" ],
+			"working_dir": "${project_path}",
+
+			"variants":
+			[
+				{
+					"name": "Preview in ghost",
+					"cmd": [ "gulp",  "livereload" ]
+				}
+			]
+		},
+		{
+			"name" : "Gulp Javascript",
+			"selector": "source.js",
+			"cmd": [ "gulp" ],
+			"working_dir": "${project_path}",
+
+			"variants":
+			[
+				{
+					"name": "Preview in ghost",
+					"cmd": [ "gulp",  "livereload" ]
+				}
+			]
+		}
+	]
+}

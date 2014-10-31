@@ -3,3 +3,5 @@ build
 node_modules
 content/themes/dev
 dev-theme.zip
+.sublime-gulp.cache
+*.sublime-workspace
