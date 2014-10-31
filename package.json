@@ -12,11 +12,11 @@
   "author": "Johannes Schriewer <j.schriewer@anfe.ma>",
   "license": "BSD",
   "devDependencies": {
+    "ghost": "^0.5.3",
     "gulp": "^3.8.9",
     "gulp-autoprefixer": "^1.0.1",
     "gulp-colorguard": "^1.0.0",
     "gulp-concat": "^2.4.1",
-    "gulp-consolidate": "^0.1.2",
     "gulp-embedlr": "^0.5.2",
     "gulp-extract-sourcemap": "^0.1.1",
     "gulp-if": "^1.2.5",
@@ -25,12 +25,10 @@
     "gulp-minify-css": "^0.3.11",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^1.2.2",
-    "gulp-server-livereload": "^1.0.1",
     "gulp-sftp": "^0.1.3",
     "gulp-sourcemaps": "^1.2.4",
     "gulp-zip": "^2.0.2",
-    "handlebars": "^2.0.0",
-    "http-server": "^0.7.2"
+    "lazypipe": "^0.2.2"
   },
   "readme": "readme.md",
   "repository": "http://git.dunkelstern.de/dunkelstern/ghost-template-dev.git"

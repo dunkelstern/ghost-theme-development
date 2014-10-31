@@ -1,18 +1,12 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 plugins.minifyCSS = require('gulp-minify-css'); // does not autoload
-plugins.server = require('gulp-server-livereload'); // does not autoload
 plugins.gulpif = require('gulp-if'); // does not autoload
+var lazypipe = require('lazypipe');
 
-// wether you want to use the socket.io based livereload (phonegap!)
-//
-// if this is false a livereload snippet is embedded into all generated
-// HTML files for serving by any webserver you want to use. Just start
-// the livereload watcher: gulp livereload
-//
-// if this is set to true then no livereload snippet is embedded and the
-// "serve" task uses it's internal socket.io based live reload.
-var socket_io_livereload = false;
+function endsWith(str, suffix) {
+	return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
 
 //
 // compile scss files and emit normal version + source map and a
@@ -25,10 +19,10 @@ gulp.task('sass', function () {
 		.pipe(plugins.colorguard())
 		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
 		.pipe(plugins.sourcemaps.write('.'))
-		.pipe(gulp.dest('build/css'))
+		.pipe(gulp.dest('content/themes/dev/assets/css'))
 		.pipe(plugins.minifyCSS())
 		.pipe(plugins.rename({suffix: '.min'}))
-		.pipe(gulp.dest('build/css'))
+		.pipe(gulp.dest('content/themes/dev/assets/css'))
 		.pipe(plugins.livereload({ auto: false }));
 });
 
@@ -40,69 +34,89 @@ gulp.task('js', function () {
 		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.concat('site.js'))
 		.pipe(plugins.sourcemaps.write('.'))
-		.pipe(gulp.dest('build/js'))
+		.pipe(gulp.dest('content/themes/dev/assets/js'))
 		.pipe(plugins.livereload({ auto: false }));
 });
 
+
 //
-// compile handlebars template files with mock-data into html for
-// live preview
+// copy handlebars theme files over
 //
-gulp.task('handlebars', function () {
-	gulp.src('templates/*.hbs')
-		.pipe(plugins.consolidate("handlebars", function(file) {
-			try {
-				var mock = require(file.path + '.mockdata.json');
-				return mock;
-			} catch (ex) {
-				return {};
+gulp.task('templates_livereload', function() {
+	var embed_live_reload = lazypipe()
+		.pipe(plugins.rename, function (path) {
+				path.extname = ".html";
 			}
-		}))
-		.pipe(plugins.rename(function (path) {
-			path.extname = ".html";
-			})
 		)
-		.pipe(plugins.gulpif((socket_io_livereload == false), plugins.embedlr()))
-		.pipe(gulp.dest("build"))
+		.pipe(plugins.embedlr)
+		.pipe(plugins.rename, function (path) {
+				path.extname = ".hbs";
+			}
+		);
+
+	gulp.src('templates/**/*.hbs')
+		.pipe(plugins.gulpif(function (file) {
+				return endsWith(file.path, "default.hbs");
+			}, embed_live_reload()
+		))
+		.pipe(gulp.dest('content/themes/dev/'))
 		.pipe(plugins.livereload({ auto: false }));
-})
-
-//
-// run a local webserver with livereload support to serve the build
-// directory
-//
-gulp.task('serve', function() {
-	var server_config = {
-		open: true,
-		defaultFile: 'index.html'
-	};
-
-	if (socket_io_livereload == false) {
-		console.log("Using normal livereload");
-		plugins.livereload.listen()
-		gulp.watch('css/*.scss', ['sass']);
-		gulp.watch('templates/*.hbs', ['handlebars']);
-		server_config.livereload = false;
-	} else {
-		console.log("Using socket.io livereload");
-		server_config.livereload = true;
-	}
-
-	gulp.src('build')
-		.pipe(plugins.server(server_config));
-
 });
+
+gulp.task('templates', function() {
+	gulp.src('templates/**/*.hbs')
+		.pipe(gulp.dest('content/themes/dev/'))
+		.pipe(plugins.livereload({ auto: false }));
+});
+
+//
+// copy stuff over
+//
+gulp.task('stuff', function() {
+	gulp.src('stuff/*')
+		.pipe(gulp.dest('content/themes/dev/'))
+		.pipe(plugins.livereload({ auto: false }));
+});
+
+//
+// copy font files over
+//
+gulp.task('fonts', function() {
+	gulp.src('fonts/*.{eot,svg,ttf,woff,otf}')
+		.pipe(gulp.dest('content/themes/dev/assets/fonts'))
+		.pipe(plugins.livereload({ auto: false }));
+});
+
 
 //
 // just run a live reload server and watch files for changes
 //
-gulp.task('livereload', function() {
-	plugins.livereload.listen()
+gulp.task('livereload', ['sass', 'js', 'templates_livereload', 'fonts', 'stuff'], function() {
+	plugins.livereload.listen();
+
 	gulp.watch('css/*.scss', ['sass']);
-	gulp.watch('templates/*.hbs', ['handlebars']);
+	gulp.watch('templates/**/*.hbs', ['templates_livereload']);
+	gulp.watch('fonts/*.{eot,svg,ttf,woff,otf}', ['fonts']);
+	gulp.watch('stuff/*', ['stuff']);
+	gulp.watch('js/*.js', ['js']);
+
+	var ghost = require('ghost');
+	process.env.NODE_ENV = 'development';
+	ghost({ config: __dirname + '/ghost-config.js' }).then(function (ghostServer) {
+		ghostServer.start();
+	});
+});
+
+gulp.task('dist', ['default'], function() {
+	gulp.src('content/themes/dev/**/*')
+		.pipe(plugins.gulpif(function (file) {
+				return !endsWith(file.path, ".map");
+			}, plugins.zip('dev-theme.zip')
+		))
+		.pipe(gulp.dest('.'));
 });
 
 //
 // default task, compile everything
 //
-gulp.task('default', ['sass', 'js', 'handlebars']);
+gulp.task('default', ['sass', 'js', 'templates', 'fonts', 'stuff']);
