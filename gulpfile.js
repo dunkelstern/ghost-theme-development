@@ -30,12 +30,10 @@ gulp.task('sass', function () {
 
 gulp.task('sass_minify', function () {
 	gulp.src('css/*.scss')
-		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.sass())
 		.pipe(plugins.colorguard())
 		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
 		.pipe(plugins.minifyCSS())
-		.pipe(plugins.sourcemaps.write('.'))
 		.pipe(gulp.dest('content/themes/dev/assets/css'))
 });
 
@@ -48,6 +46,12 @@ gulp.task('js', function () {
 		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.concat('site.js'))
 		.pipe(plugins.sourcemaps.write('.'))
+		.pipe(gulp.dest('content/themes/dev/assets/js'))
+});
+
+gulp.task('js_minify', function () {
+	gulp.src('js/*.js')
+		.pipe(plugins.concat('site.js'))
 		.pipe(gulp.dest('content/themes/dev/assets/js'))
 });
 
@@ -136,4 +140,4 @@ gulp.task('dist', ['default'], function() {
 //
 // default task, compile everything
 //
-gulp.task('default', ['sass_minify', 'js', 'templates', 'fonts', 'stuff']);
+gulp.task('default', ['sass_minify', 'js_minify', 'templates', 'fonts', 'stuff']);
