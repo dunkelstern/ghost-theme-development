@@ -4,6 +4,11 @@ plugins.minifyCSS = require('gulp-minify-css'); // does not autoload
 plugins.gulpif = require('gulp-if'); // does not autoload
 var lazypipe = require('lazypipe');
 
+var onError = function (err) {
+	plugins.util.log(plugins.util.colors.red("Error"), err.message);
+        this.emit('end');
+};
+
 function endsWith(str, suffix) {
 	return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
@@ -14,6 +19,7 @@ function endsWith(str, suffix) {
 //
 gulp.task('sass', function () {
 	gulp.src('css/*.scss')
+		.pipe(plugins.plumber(onError))
 		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.sass())
 		.pipe(plugins.colorguard())
@@ -38,6 +44,7 @@ gulp.task('sass_minify', function () {
 //
 gulp.task('js', function () {
 	gulp.src('js/*.js')
+		.pipe(plugins.plumber(onError))
 		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.concat('site.js'))
 		.pipe(plugins.sourcemaps.write('.'))
@@ -61,6 +68,7 @@ gulp.task('templates_livereload', function() {
 		);
 
 	gulp.src('templates/**/*.hbs')
+		.pipe(plugins.plumber(onError))
 		.pipe(plugins.gulpif(function (file) {
 				return endsWith(file.path, "default.hbs");
 			}, embed_live_reload()
