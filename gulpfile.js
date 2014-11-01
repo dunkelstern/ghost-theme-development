@@ -20,10 +20,17 @@ gulp.task('sass', function () {
 		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
 		.pipe(plugins.sourcemaps.write('.'))
 		.pipe(gulp.dest('content/themes/dev/assets/css'))
+});
+
+gulp.task('sass_minify', function () {
+	gulp.src('css/*.scss')
+		.pipe(plugins.sourcemaps.init())
+		.pipe(plugins.sass())
+		.pipe(plugins.colorguard())
+		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
 		.pipe(plugins.minifyCSS())
-		.pipe(plugins.rename({suffix: '.min'}))
+		.pipe(plugins.sourcemaps.write('.'))
 		.pipe(gulp.dest('content/themes/dev/assets/css'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 //
@@ -35,7 +42,6 @@ gulp.task('js', function () {
 		.pipe(plugins.concat('site.js'))
 		.pipe(plugins.sourcemaps.write('.'))
 		.pipe(gulp.dest('content/themes/dev/assets/js'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 
@@ -60,13 +66,11 @@ gulp.task('templates_livereload', function() {
 			}, embed_live_reload()
 		))
 		.pipe(gulp.dest('content/themes/dev/'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 gulp.task('templates', function() {
 	gulp.src('templates/**/*.hbs')
 		.pipe(gulp.dest('content/themes/dev/'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 //
@@ -75,7 +79,6 @@ gulp.task('templates', function() {
 gulp.task('stuff', function() {
 	gulp.src('stuff/*')
 		.pipe(gulp.dest('content/themes/dev/'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 //
@@ -84,7 +87,6 @@ gulp.task('stuff', function() {
 gulp.task('fonts', function() {
 	gulp.src('fonts/*.{eot,svg,ttf,woff,otf}')
 		.pipe(gulp.dest('content/themes/dev/assets/fonts'))
-		.pipe(plugins.livereload({ auto: false }));
 });
 
 
@@ -92,13 +94,20 @@ gulp.task('fonts', function() {
 // just run a live reload server and watch files for changes
 //
 gulp.task('livereload', ['sass', 'js', 'templates_livereload', 'fonts', 'stuff'], function() {
-	plugins.livereload.listen();
+	reloader = plugins.livereload("0.0.0.0:35729");
 
 	gulp.watch('css/*.scss', ['sass']);
 	gulp.watch('templates/**/*.hbs', ['templates_livereload']);
 	gulp.watch('fonts/*.{eot,svg,ttf,woff,otf}', ['fonts']);
 	gulp.watch('stuff/*', ['stuff']);
 	gulp.watch('js/*.js', ['js']);
+
+	gulp.watch('content/themes/dev/**/*.css').on('change', function(file) {
+		reloader.changed(file.path);
+	});
+	gulp.watch('content/themes/dev/**/*.hbs').on('change', function(file) {
+		reloader.changed(file.path);
+	});
 
 	var ghost = require('ghost');
 	process.env.NODE_ENV = 'development';
@@ -119,4 +128,4 @@ gulp.task('dist', ['default'], function() {
 //
 // default task, compile everything
 //
-gulp.task('default', ['sass', 'js', 'templates', 'fonts', 'stuff']);
+gulp.task('default', ['sass_minify', 'js', 'templates', 'fonts', 'stuff']);
