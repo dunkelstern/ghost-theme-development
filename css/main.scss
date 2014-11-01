@@ -1,5 +1,10 @@
 @import "../bower_components/inuit-defaults/settings.defaults";
 
+$inuit-base-font-size:          14px;
+$inuit-base-line-height:        20px;
+$inuit-base-text-color:         #000;
+$inuit-base-background-color:   #fff;
+
 @import "../bower_components/inuit-functions/tools.functions";
 @import "../bower_components/inuit-mixins/tools.mixins";
 
@@ -10,9 +15,412 @@
 @import "../bower_components/inuit-images/base.images";
 @import "../bower_components/inuit-lists/base.lists";
 
-@import "../bower_components/inuit-layout/objects.layout";
 @import "../bower_components/inuit-list-bare/objects.list-bare";
 @import "../bower_components/inuit-tabs/objects.tabs";
 @import "../bower_components/inuit-buttons/objects.buttons";
 
 @import "../bower_components/inuit-widths/trumps.widths";
+
+// Generic
+
+html {
+	font-family: 'Tinos', serif;
+	font-style: normal;
+	font-weight: 400;
+	overflow-y: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Cinzel', serif;
+	font-style: normal;
+	font-weight: 700;
+	margin: 0 0 $inuit-base-spacing-unit 0;
+	padding: 0;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	text-decoration: none;
+}
+
+code, pre {
+	font-family: 'Fira Mono', null;
+	font-style: normal;
+	font-weight: 400;
+	font-size: $inuit-base-font-size - 2px;
+}
+
+a {
+	color: #4444ff;
+}
+
+a:visited {
+	color: #0000cc;
+}
+
+// Layout
+
+#columns {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: no-wrap;
+}
+
+#rows {
+	display: block;
+	height: 100vh;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+main {
+	padding: $inuit-base-spacing-unit;
+	max-width: 700px;
+	min-width: 500px;
+	flex-grow: 4;
+}
+
+.pageheader {
+	padding: $inuit-base-spacing-unit;
+	flex-grow: 1;
+	height: 100vh;
+	min-width: 260px;
+	max-width: 400px;
+	background: #f0f0f0 no-repeat 70% center;
+	background-size: cover;
+	color: #fff;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+
+	display: flex;
+	flex-direction: column;
+}
+
+.site-footer {
+	padding: $inuit-base-spacing-unit;
+	font-size: 0.75rem;
+	color: #666;
+	text-align: right;
+}
+
+.site-footer a {
+	color: #444;
+	text-decoration: none;
+}
+
+.post-footer, .author-profile {
+	border-left: 5px solid #bbe;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: no-wrap;
+}
+
+.post-footer {
+	margin: $inuit-base-spacing-unit * 2 0 0 0;
+}
+
+.author-profile {
+	margin: 0 0 $inuit-base-spacing-unit * 2 0;
+}
+
+.post-footer section, .author-profile div.author {
+	padding: 0 $inuit-base-spacing-unit $inuit-base-spacing-unit 0;
+}
+
+.author-image {
+	padding: $inuit-base-spacing-unit - 4px 0 0 0;
+}
+
+footer.post-meta {
+	margin-bottom: $inuit-base-spacing-unit * 4;
+}
+
+// Classes
+
+pre {
+	line-height: $inuit-base-line-height;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	padding: $inuit-base-spacing-unit / 4;
+	border-left: 5px solid #ecb;
+	color: #444;
+}
+
+code {
+	background-color: #f0f0f0;
+	border-radius: 3px;
+	padding: 0 $inuit-base-spacing-unit / 8 0 $inuit-base-spacing-unit / 8;
+}
+
+blockquote {
+	font-style: italic;
+	margin: 0;
+	border-radius: 5px;
+	padding: $inuit-base-spacing-unit / 2 $inuit-base-spacing-unit * 2 $inuit-base-spacing-unit / 2 $inuit-base-spacing-unit * 2;
+	border-left: 5px solid #beb;
+	background-color: #f0f0f0;
+	font-size: 1.2rem;
+}
+
+blockquote small {
+	display: block;
+	text-align: right;
+	clear: both;
+	color: #666;
+}
+
+main h1, main h2 {
+	border-bottom: 1px solid #ddd;
+}
+
+main h3, main h4, main h5, main h6 {
+	margin-top: $inuit-base-spacing-unit;
+	margin-bottom: $inuit-base-spacing-unit / 2;
+}
+
+main img {
+	border-left: 5px solid #666;
+	border-radius: 5px;
+}
+
+// Generic Elements
+
+.blog-logo img {
+	border-radius: 50%;
+	border: 2px solid #ffffff;
+	box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.5);
+}
+
+.pageheader .main-nav {
+	flex: 1;
+}
+
+.pageheader .vertical {
+	text-align: center;
+}
+
+.pageheader h2:before, .pageheader h2:after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: #fff;
+	margin: 5px 0 7px 0;
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+main:before {
+	// creates a single sided shadow on the left of the element
+    content: "";
+    display: block;
+    position: fixed;
+    width: 6px;
+    height: 100vh;
+    float: left;
+    margin-left: -$inuit-base-spacing-unit - 6px;
+    margin-top: -$inuit-base-spacing-unit;
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.25) 100%);
+    overflow: hidden;    
+}
+
+.hidden {
+	display: none;
+}
+
+// Specific Elements
+
+.post-meta {
+	padding-bottom: $inuit-base-spacing-unit / 2;
+	font-size: 0.75rem;
+	color: #666;
+}
+
+.author-image .img {
+	display: block;
+	width: 70px;
+	height: 70px;
+	border-radius: 35px;
+	background: #f0f0f0 no-repeat center center;
+	background-size: cover;
+	box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+.author-thumb {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	border-radius: 17px;
+	background: #f0f0f0 no-repeat center center;
+	background-size: cover;	
+	margin-right: $inuit-base-spacing-unit / 2;
+}
+
+.share a {
+	display: inline-block;
+	width: 30px;
+	vertical-align: middle;
+	text-align: left;
+	text-decoration: none;
+    color: #444;
+}
+
+.share iframe {
+	margin-top: $inuit-base-spacing-unit / 2;
+}
+
+.subscribe-button, .back-button {
+	display: inline-block;
+	height: 38px;
+	width: 100%;
+    padding: 0 20px;
+    margin-top: $inuit-base-spacing-unit;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-left: 5px solid rgba(0,0,0,0.5);
+    color: #fff !important;
+    text-align: center;
+    line-height: 38px;
+    white-space: nowrap;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.3);
+    transition: all ease 0.3s;
+    text-decoration: none;
+}
+
+.subscribe-button:hover {
+    border-color: #ffa000;
+    color: #ffa000;
+    background: rgba(0,0,0,0.5);
+}
+
+.back-button:hover {
+    border-color: #ffffff;
+    background: rgba(0,0,0,0.5);
+}
+
+.pagination {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: no-wrap;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 700px;
+	min-width: 500px;
+}
+
+.pagination .page-number {
+	height: 38px;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 38px;	
+}
+
+.pagination a {
+	display: inline-block;
+	height: 38px;
+    padding: 0 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-left: 5px solid rgba(0,0,0,0.2);
+    color: #444;
+    text-align: center;
+    line-height: 38px;
+    white-space: nowrap;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.1);
+    transition: all ease 0.3s;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+	border-color: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.0);
+    color: #000;
+}
+
+h2.post-title {
+	font-size: 2em;
+}
+
+.tag-head {
+	margin: 0 0 $inuit-base-spacing-unit 0;
+	border-left: 5px solid #bbe;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	padding: $inuit-base-spacing-unit;
+}
+
+// Overrides
+
+body.author-template footer.post-meta {
+	visibility: hidden;
+}
+
+body.home-template .back-button {
+	display:none;
+}
+
+
+// Icons
+
+@font-face {
+    font-family: "casper-icons";
+    src:url("../fonts/casper-icons.eot");
+    src:url("../fonts/casper-icons.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/casper-icons.woff") format("woff"),
+        url("../fonts/casper-icons.ttf") format("truetype"),
+        url("../fonts/casper-icons.svg#icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "casper-icons", "Open Sans", sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    text-decoration: none !important;
+    border: none !important;
+}
+
+/* Each icon is created by inserting the correct character into the
+   content of the :before pseudo element. Like a boss. */
+.icon-ghost:before {
+    content: "\f600";
+    margin-right: 3px;
+}
+.icon-feed:before {
+    content: "\f601";
+    margin-right: 5px;
+}
+.icon-twitter:before {
+    content: "\f602";
+    font-size: 1.1em;
+}
+.icon-google-plus:before {
+    content: "\f603";
+}
+.icon-facebook:before {
+    content: "\f604";
+}
+.icon-arrow-left:before {
+    content: "\f605";
+    margin-right: 2px;
+}
+.icon-stats:before {
+    content: "\f606";
+}
+.icon-location:before {
+    content: "\f607";
+    margin-left: -3px; /* Tracking fix */
+}
+.icon-link:before {
+    content: "\f608";
+}
+
+@import "syntax_theme/pojoaque.scss";

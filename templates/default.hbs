@@ -15,28 +15,50 @@
     <link rel="shortcut icon" href="{{asset "favicon.ico"}}">
 
     {{! Styles'n'Scripts }}
-    <link rel="stylesheet" type="text/css" href="{{asset "css/screen.css"}}" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
-
+    <link rel="stylesheet" type="text/css" href="{{asset "css/main.css"}}" />
+    <link href='http://fonts.googleapis.com/css?family=Fira+Mono:400,700|Tinos:400,700,400italic|Cinzel:700' rel='stylesheet' type='text/css'>
     {{! Ghost outputs important style and meta data with this tag }}
     {{ghost_head}}
 </head>
 <body class="{{body_class}}">
 
+    <div id="columns">
+    {{#if post}}
+    {{#post}}
+    <header class="pageheader" {{#if image}}style="background-image: url({{image}})"{{else}}{{#if @blog.cover}}style="background-image: url({{@blog.cover}})"{{/if}}{{/if}}>
+    {{/post}}
+    {{else}}
+    <header class="pageheader" {{#if @blog.cover}}style="background-image: url({{@blog.cover}})"{{/if}}>
+    {{/if}}
+        <nav class="main-nav">
+        {{#if @blog.logo}}<a class="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="Blog Logo" /></a>{{/if}}
+            <a class="back-button icon-arrow-left" href="{{@blog.url}}">Home</a>
+            <a class="subscribe-button icon-feed" href="{{@blog.url}}/rss/">Subscribe</a>
+        </nav>
+        <div class="vertical">
+            <div>
+                <h1 class="page-title">{{@blog.title}}</h1>
+                <h2 class="page-description">{{@blog.description}}</h2>
+            </div>
+        </div>
+    </header>
+
+    <div id="rows">
     {{! Everything else gets inserted here }}
     {{{body}}}
 
     <footer class="site-footer clearfix">
          <section class="copyright"><a href="{{@blog.url}}">{{@blog.title}}</a> &copy; {{date format="YYYY"}}</section>
-         <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+         <section class="poweredby">Proudly published with <a class="icon-ghost" href="https://ghost.org">Ghost</a></section>
     </footer>
+    </div>
+    </div>
 
     {{! Ghost outputs important scripts and data with this tag }}
     {{ghost_foot}}
 
     {{! The main JavaScript file for Casper }}
-    <script type="text/javascript" src="{{asset "js/jquery.fitvids.js"}}"></script>
-    <script type="text/javascript" src="{{asset "js/index.js"}}"></script>
+    <script type="text/javascript" src="{{asset "js/site.js"}}"></script>
 
 </body>
 </html>

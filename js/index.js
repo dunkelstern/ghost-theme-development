@@ -96,3 +96,9 @@
 
     };
 })(jQuery, 'smartresize');
+
+$(document).ready(function() {
+  $('code.prettyprint').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
