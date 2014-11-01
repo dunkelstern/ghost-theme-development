@@ -108,7 +108,7 @@ gulp.task('fonts', function() {
 gulp.task('livereload', ['sass', 'js', 'templates_livereload', 'fonts', 'stuff'], function() {
 	reloader = plugins.livereload("0.0.0.0:35729");
 
-	gulp.watch('css/*.scss', ['sass']);
+	gulp.watch('css/**/*.scss', ['sass']);
 	gulp.watch('templates/**/*.hbs', ['templates_livereload']);
 	gulp.watch('fonts/*.{eot,svg,ttf,woff,otf}', ['fonts']);
 	gulp.watch('stuff/*', ['stuff']);
