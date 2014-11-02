@@ -145,6 +145,12 @@ pre {
 	padding: $inuit-base-spacing-unit / 4;
 	border-left: 5px solid #ecb;
 	color: #444;
+	text-indent: -3px; // weird bugfix
+}
+
+// fix the weird bugfix
+pre code.prettyprint {
+	text-indent: 0px;
 }
 
 code {
