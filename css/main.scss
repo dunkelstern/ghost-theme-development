@@ -423,4 +423,59 @@ body.home-template .back-button {
     content: "\f608";
 }
 
+// Media Query
+
+@media screen and (max-width: 799px) {
+
+	html {
+		overflow: auto;
+	}
+
+	#columns {
+		display: block;
+	}
+
+	#rows {
+		display: block;
+		overflow: visible;
+	}
+
+	.pageheader {
+		height: 350px;
+		left: 0;
+		right: 0;
+		max-width: 1920px;
+		// display: none;
+	}
+
+	.pageheader img {
+		width: 170px;
+		height: 170px;
+	}
+
+	.pageheader .vertical  {
+		text-align: right;
+	}
+
+	.vertical h1 {
+		display: block;
+		font-size: 1.5em;
+	}
+
+	.vertical h2 {
+		display: inline-block;
+		text-align: center;
+		width: 200px;
+		font-size: 1.2em;
+		margin-bottom: 150px;
+	}
+
+	.pagination {
+		max-width: 600px;
+		min-width: 300px;
+	}
+}
+
+// Syntax hilighter
+
 @import "syntax_theme/pojoaque.scss";
