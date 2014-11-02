@@ -129,7 +129,7 @@ main {
 }
 
 .author-image {
-	padding: $inuit-base-spacing-unit - 4px 0 0 0;
+	margin: $inuit-base-spacing-unit;
 }
 
 footer.post-meta {
@@ -445,7 +445,6 @@ body.home-template .back-button {
 		left: 0;
 		right: 0;
 		max-width: 1920px;
-		// display: none;
 	}
 
 	.pageheader img {
@@ -473,6 +472,13 @@ body.home-template .back-button {
 	.pagination {
 		max-width: 600px;
 		min-width: 300px;
+	}
+
+	.author-image .img {
+		width: 60px;
+		height: 60px;
+		border-radius: 30px;
+		margin-right: 10px;
 	}
 }
 
