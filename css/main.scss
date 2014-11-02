@@ -251,7 +251,7 @@ main:before {
 	background-size: cover;
 	box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);
 	padding: 0;
-	margin: 0;
+	margin: 0 $inuit-base-spacing-unit 0 0;
 	border: none;
 }
 
@@ -484,7 +484,6 @@ body.home-template .back-button {
 		width: 60px;
 		height: 60px;
 		border-radius: 30px;
-		margin-right: 10px;
 	}
 }
 
