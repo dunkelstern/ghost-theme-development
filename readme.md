@@ -13,7 +13,7 @@
 ## Requirements
 
 1. [nodejs](http://nodejs.org),
-    On a mac fetch it with _homebrew_: `brew install nodejs`
+    On a mac fetch it with _homebrew_: `brew install node`
 2. [gulp](http://gulpjs.com),
     Install via _npm_ if you don't have it: `npm install -g gulp`
 3. [bower](http://bower.io),
